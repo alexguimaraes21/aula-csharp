@@ -1,0 +1,34 @@
+Tabelas
+
+- Book
+  - BookId
+  - AuthorId
+  - Publisher
+  - Isbn
+  - Title
+  - TotalPages
+  - ReleaseDate
+  - Summary
+  - Price
+- Genre
+  - GenreId
+  - Title
+- Author
+  - AuthorId
+  - Name
+  - BirthDate
+- Stock
+  - StockId
+  - BookId
+  - Qty
+- Seller
+  - SellerId
+  - Name
+  - SellerCode
+- Sale
+  - SaleId
+  - SaleTotal
+  - SellerId
+- SaleBook
+  - SaleId
+  - BookId
