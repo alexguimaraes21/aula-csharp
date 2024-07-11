@@ -1,7 +1,17 @@
+using Livraria.Web.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+#region DB Configuration
+var connectionString = builder.Configuration.GetConnectionString("DbConnection");
+builder.Services.AddDbContext<DatabaseContext>(
+    opt => opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)).EnableSensitiveDataLogging(true)
+);
+#endregion
 
 var app = builder.Build();
 
