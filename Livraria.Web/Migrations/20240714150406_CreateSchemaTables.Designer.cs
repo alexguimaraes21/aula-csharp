@@ -4,6 +4,7 @@ using Livraria.Web.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Livraria.Web.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240714150406_CreateSchemaTables")]
+    partial class CreateSchemaTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,29 +59,24 @@ namespace Livraria.Web.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("AuthorId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("author_id");
+                        .HasColumnType("bigint");
 
                     b.Property<long>("GenreId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("genre_id");
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Isbn")
                         .HasColumnType("int")
                         .HasColumnName("isbn");
 
                     b.Property<double>("Price")
-                        .HasColumnType("double")
-                        .HasColumnName("price");
+                        .HasColumnType("double");
 
                     b.Property<string>("Publisher")
                         .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("publisher");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("DATE")
-                        .HasColumnName("release_date");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Summary")
                         .IsRequired()
@@ -86,8 +84,7 @@ namespace Livraria.Web.Migrations
                         .HasColumnName("summary");
 
                     b.Property<int>("TotalPages")
-                        .HasColumnType("int")
-                        .HasColumnName("total_pages");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -193,12 +190,10 @@ namespace Livraria.Web.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("BookId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("book_id");
+                        .HasColumnType("bigint");
 
                     b.Property<double>("Qty")
-                        .HasColumnType("DOUBLE")
-                        .HasColumnName("qty");
+                        .HasColumnType("DOUBLE");
 
                     b.HasKey("Id");
 
@@ -243,18 +238,17 @@ namespace Livraria.Web.Migrations
             modelBuilder.Entity("Livraria.Web.Models.SaleBook", b =>
                 {
                     b.HasOne("Livraria.Web.Models.Book", "Book")
-                        .WithMany("SaleBooks")
+                        .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_sablebook_book_id");
+                        .IsRequired();
 
                     b.HasOne("Livraria.Web.Models.Sale", "Sale")
                         .WithMany("SaleBooks")
                         .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_sablebook_sale_id");
+                        .HasConstraintName("fk_sale_book_sales");
 
                     b.Navigation("Book");
 
@@ -276,11 +270,6 @@ namespace Livraria.Web.Migrations
             modelBuilder.Entity("Livraria.Web.Models.Author", b =>
                 {
                     b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("Livraria.Web.Models.Book", b =>
-                {
-                    b.Navigation("SaleBooks");
                 });
 
             modelBuilder.Entity("Livraria.Web.Models.Genre", b =>
