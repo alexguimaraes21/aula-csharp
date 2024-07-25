@@ -1,4 +1,5 @@
 using Livraria.Web.Context;
+using Livraria.Web.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,10 @@ var connectionString = builder.Configuration.GetConnectionString("DbConnection")
 builder.Services.AddDbContext<DatabaseContext>(
     opt => opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)).EnableSensitiveDataLogging(true)
 );
+#endregion
+
+#region Repositories
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 #endregion
 
 var app = builder.Build();
