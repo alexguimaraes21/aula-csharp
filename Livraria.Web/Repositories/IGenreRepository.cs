@@ -10,6 +10,6 @@ namespace Livraria.Web.Repositories
         void Add(Genre model);
         void Update(Genre model);
         void Delete(long id);
-        void Delete(Genre genre);
+        void Delete(Genre model);
     }
 }

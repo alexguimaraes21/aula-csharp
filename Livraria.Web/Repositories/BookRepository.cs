@@ -6,37 +6,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Livraria.Web.Repositories 
 {
-    public class GenreRepository : IGenreRepository
+    public class BookRepository : IBookRepository
     {
         private readonly DatabaseContext _databaseContext;
-        public GenreRepository(DatabaseContext databaseContext)
+        public BookRepository(DatabaseContext databaseContext)
         {
             this._databaseContext = databaseContext;
         }
-        public void Add(Genre model)
+        public void Add(Book model)
         {
-            _databaseContext.Genres.Add(model);
+            _databaseContext.Books.Add(model);
             _databaseContext.SaveChanges();
         }
 
         public void Delete(long id)
         {
-            Genre? model = this.FindById(id);
+            Book? model = this.FindById(id);
             if (model != null) {
-                _databaseContext.Genres.Remove(model);
+                _databaseContext.Books.Remove(model);
                 _databaseContext.SaveChanges();
             }
         }
 
-        public void Delete(Genre model)
+        public void Delete(Book model)
         {
-            _databaseContext.Genres.Remove(model);
+            _databaseContext.Books.Remove(model);
             _databaseContext.SaveChanges();
         }
 
-        public ICollection<Genre> FindAll(int page = 1, int size = 10)
+        public ICollection<Book> FindAll(int page = 1, int size = 10)
         {
-            return _databaseContext.Genres
+            return _databaseContext.Books
                 .OrderBy(g => g.Id)
                 .Skip((page - 1) * size)
                 .Take(size)
@@ -44,14 +44,14 @@ namespace Livraria.Web.Repositories
                 .ToList();
         }
 
-        public Genre? FindById(long id)
+        public Book? FindById(long id)
         {
-            return _databaseContext.Genres.Find(id);
+            return _databaseContext.Books.Find(id);
         }
 
-        public void Update(Genre model)
+        public void Update(Book model)
         {
-            _databaseContext.Genres.Update(model);
+            _databaseContext.Books.Update(model);
             _databaseContext.SaveChanges();
         }
     }

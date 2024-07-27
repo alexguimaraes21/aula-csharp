@@ -6,52 +6,51 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Livraria.Web.Repositories 
 {
-    public class GenreRepository : IGenreRepository
+    public class SaleBookRepository : ISaleBookRepository
     {
         private readonly DatabaseContext _databaseContext;
-        public GenreRepository(DatabaseContext databaseContext)
+        public SaleBookRepository(DatabaseContext databaseContext)
         {
             this._databaseContext = databaseContext;
         }
-        public void Add(Genre model)
+        public void Add(SaleBook model)
         {
-            _databaseContext.Genres.Add(model);
+            _databaseContext.SaleBooks.Add(model);
             _databaseContext.SaveChanges();
         }
 
         public void Delete(long id)
         {
-            Genre? model = this.FindById(id);
+            SaleBook? model = this.FindById(id);
             if (model != null) {
-                _databaseContext.Genres.Remove(model);
+                _databaseContext.SaleBooks.Remove(model);
                 _databaseContext.SaveChanges();
             }
         }
 
-        public void Delete(Genre model)
+        public void Delete(SaleBook model)
         {
-            _databaseContext.Genres.Remove(model);
+            _databaseContext.SaleBooks.Remove(model);
             _databaseContext.SaveChanges();
         }
 
-        public ICollection<Genre> FindAll(int page = 1, int size = 10)
+        public ICollection<SaleBook> FindAll(int page = 1, int size = 10)
         {
-            return _databaseContext.Genres
-                .OrderBy(g => g.Id)
+            return _databaseContext.SaleBooks
                 .Skip((page - 1) * size)
                 .Take(size)
                 .AsNoTracking()
                 .ToList();
         }
 
-        public Genre? FindById(long id)
+        public SaleBook? FindById(long id)
         {
-            return _databaseContext.Genres.Find(id);
+            return _databaseContext.SaleBooks.Find(id);
         }
 
-        public void Update(Genre model)
+        public void Update(SaleBook model)
         {
-            _databaseContext.Genres.Update(model);
+            _databaseContext.SaleBooks.Update(model);
             _databaseContext.SaveChanges();
         }
     }
